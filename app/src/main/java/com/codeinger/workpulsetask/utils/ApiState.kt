@@ -7,7 +7,7 @@ sealed class ApiState {
 
     object Loading : ApiState()
     class Failure(val msg: Throwable) : ApiState()
-    class Success(val data: ArrayList<ItemsModel>) : ApiState()
+    class Success(val data: List<ItemsModel>) : ApiState()
     object Empty : ApiState()
 
 }

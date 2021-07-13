@@ -33,37 +33,33 @@ class MainActivity : AppCompatActivity() {
 //        itemViewModel.getPost("print=pretty")
         itemViewModel.getStorys()
 
-        lifecycleScope.launchWhenStarted {
-
-            itemViewModel.postsLiveData.observe(this@MainActivity, {
-                when (it) {
-                    is ApiState.Loading -> {
-                        binding.rvItem.isVisible = false
-                        binding.progressBar.isVisible = true
-                    }
-
-                    is ApiState.Failure -> {
-                        binding.rvItem.isVisible = false
-                        binding.progressBar.isVisible = false
-                        Log.d("dsfsfss", "fail: "+it.msg.toString())
-
-                    }
-                    is ApiState.Success -> {
-                        binding.rvItem.isVisible = true
-                        binding.progressBar.isVisible = false
-                        Log.d("dsfsfss", "onCreate: "+it.data.toString())
-                        list.addAll(it.data)
-                        itemadapter.notifyDataSetChanged()
-                    }
-
-                    is ApiState.Empty -> {
-
-                    }
+        itemViewModel.postsLiveData.observe(this@MainActivity, {
+            when (it) {
+                is ApiState.Loading -> {
+                    binding.rvItem.isVisible = false
+                    binding.progressBar.isVisible = true
                 }
-            })
 
+                is ApiState.Failure -> {
+                    binding.rvItem.isVisible = false
+                    binding.progressBar.isVisible = false
+                    Log.d("dsfsfss", "fail: "+it.msg.toString())
 
-        }
+                }
+                is ApiState.Success -> {
+                    binding.rvItem.isVisible = true
+                    binding.progressBar.isVisible = false
+                    Log.d("dsfsfss", "onCreate: "+it.data.toString())
+                    list.addAll(it.data)
+                    itemadapter.notifyDataSetChanged()
+                }
+
+                is ApiState.Empty -> {
+
+                }
+            }
+        })
+
 
 
 

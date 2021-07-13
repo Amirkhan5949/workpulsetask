@@ -18,8 +18,8 @@ interface ItemsDao {
     suspend fun deleteAllItems(): Int
 
     @Query("SELECT * FROM news_table ORDER BY score ASC")
-    fun readAllData():  List<ItemsModel>
+    suspend fun readAllData():  List<ItemsModel>
 
     @Query("SELECT * FROM news_table WHERE id = :id")
-    fun getItemById(id : Int):  ItemsModel?
+    suspend fun getItemById(id : Int):  ItemsModel?
 }
