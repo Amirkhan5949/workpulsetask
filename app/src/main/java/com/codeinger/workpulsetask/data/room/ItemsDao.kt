@@ -1,6 +1,5 @@
-package com.codeinger.room
+package com.codeinger.workpulsetask.data.room
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.codeinger.workpulsetask.model.ItemsModel
 
@@ -20,4 +19,7 @@ interface ItemsDao {
 
     @Query("SELECT * FROM news_table ORDER BY id ASC")
     fun readAllData():  List<ItemsModel>
+
+    @Query("SELECT * FROM news_table WHERE id = :id")
+    fun getItemById(id : Int):  ItemsModel?
 }

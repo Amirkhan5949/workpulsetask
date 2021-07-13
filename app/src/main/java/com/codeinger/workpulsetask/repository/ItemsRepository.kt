@@ -1,8 +1,7 @@
-package com.codeinger.repository
+package com.codeinger.workpulsetask.repository
 
-import androidx.lifecycle.LiveData
-import com.codeinger.network.ApiServiceImplementation
-import com.codeinger.room.ItemsDao
+import com.codeinger.workpulsetask.data.network.ApiServiceImplementation
+import com.codeinger.workpulsetask.data.room.ItemsDao
 import com.codeinger.workpulsetask.model.ItemsModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -13,18 +12,24 @@ import javax.inject.Inject
 class ItemsRepository @Inject constructor (private val apiServiceImplementation: ApiServiceImplementation,
 private val itemsDao: ItemsDao){
 
-    fun getPosts() : Flow <List<ItemsModel>> =
+    fun getPosts(s: String): Flow <List<Int>> =
         flow {
-            emit(apiServiceImplementation.getPosts())
+            emit(apiServiceImplementation.getPosts("print=pretty"))
         }.flowOn(Dispatchers.IO)
 
+    suspend fun getSinglePosts(s: String): ItemsModel =
+        apiServiceImplementation.getSinglePosts(s)
 
-    suspend fun getPostFromRoom() : List<ItemsModel>{
+
+
+    suspend fun readAllData() : List<ItemsModel>{
         return itemsDao.readAllData()
     }
 
 
-
+    suspend fun getItemById(id : Int) : ItemsModel?{
+        return itemsDao.getItemById(id)
+    }
 
     suspend fun addItem(itemsModel: ItemsModel){
         itemsDao.addItem(itemsModel)

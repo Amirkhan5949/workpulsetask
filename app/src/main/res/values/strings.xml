@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">WorkpulseTask</string>
+    <string name="title"><![CDATA[title->]]></string>
+    <string name="score"><![CDATA[score->]]></string>
+    <string name="by"><![CDATA[by->]]></string>
+    <string name="time"><![CDATA[time->]]></string>
+    <string name="descendants"><![CDATA[descendants->]]></string>
+    <string name="type"><![CDATA[type->]]></string>
 </resources>

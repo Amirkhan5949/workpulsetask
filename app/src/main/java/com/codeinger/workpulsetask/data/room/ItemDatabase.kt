@@ -1,4 +1,4 @@
-package com.codeinger.room
+package com.codeinger.workpulsetask.data.room
 
 import android.content.Context
 import androidx.room.Database
