@@ -1,0 +1,2 @@
+rootProject.name = "WorkpulseTask"
+include ':app'
