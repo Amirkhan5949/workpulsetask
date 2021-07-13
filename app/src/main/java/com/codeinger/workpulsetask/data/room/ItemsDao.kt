@@ -17,7 +17,7 @@ interface ItemsDao {
     @Query("DELETE FROM news_table")
     suspend fun deleteAllItems(): Int
 
-    @Query("SELECT * FROM news_table ORDER BY id ASC")
+    @Query("SELECT * FROM news_table ORDER BY score ASC")
     fun readAllData():  List<ItemsModel>
 
     @Query("SELECT * FROM news_table WHERE id = :id")

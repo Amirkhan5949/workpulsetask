@@ -11,26 +11,28 @@ import java.text.SimpleDateFormat
 
 class ItemAdapter(private var itemlist: ArrayList<ItemsModel>) : RecyclerView.Adapter<ItemAdapter.ItemAdapter_View>() {
 
-    private lateinit var binding: ItemBinding
 
-    class ItemAdapter_View(itemView: View) : RecyclerView.ViewHolder(itemView)
+
+    class ItemAdapter_View(var binding: ItemBinding) : RecyclerView.ViewHolder(binding.root){
+
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter_View {
-        binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemAdapter_View(binding.root)
+        var binding: ItemBinding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ItemAdapter_View(binding)
     }
 
     override fun onBindViewHolder(holder: ItemAdapter_View, position: Int) {
-        binding.title.text = itemlist[position].title
-        binding.by.text = itemlist[position].by.toString()
-        binding.descendants.text = itemlist[position].descendants.toString()
-        binding.score.text = position.toString()
-        binding.type.text = itemlist[position].type.toString()
+        holder.binding.title.text = itemlist[position].title
+        holder.binding.by.text = itemlist[position].by.toString()
+        holder.binding.descendants.text = itemlist[position].descendants.toString()
+        holder.binding.score.text = itemlist[position].score.toString()
+        holder.binding.type.text = itemlist[position].type.toString()
 
         var pattern: String = "HH:mm:ss"
         var df: SimpleDateFormat = SimpleDateFormat(pattern)
         var todayAsString: String = df.format(itemlist[position].time)
-        binding.time.text = todayAsString
+        holder.binding.time.text = todayAsString
 
     }
 

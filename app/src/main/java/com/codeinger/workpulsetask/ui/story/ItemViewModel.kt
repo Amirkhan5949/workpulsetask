@@ -63,9 +63,10 @@ class ItemViewModel @Inject constructor(
                     Log.i("dscbsm", "async: "+data)
                     itemsRepository.addItem(data)
                 }
-                itemList.add(data)
             }
-            Log.i("smadnxm", "outside : "+ids)
+            val data = itemsRepository.readAllData()
+            itemList.addAll(data)
+
             withContext(Dispatchers.Main) {
                 mutablePosts.value = ApiState.Success(itemList)
             }
