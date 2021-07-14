@@ -1,28 +1,35 @@
 package com.codeinger.workpulsetask.ui.story
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+ import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.codeinger.workpulsetask.ui.story.adapter.ItemAdapter
-import com.codeinger.workpulsetask.utils.ApiState
+import com.codeinger.workpulsetask.R
 import com.codeinger.workpulsetask.databinding.ActivityMainBinding
-import com.codeinger.workpulsetask.model.ItemsModel
-import dagger.hilt.android.AndroidEntryPoint
+import com.codeinger.workpulsetask.model.StoryModel
+import com.codeinger.workpulsetask.ui.story.adapter.StoryAdapter
+import com.codeinger.workpulsetask.utils.ApiState
+ import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var itemadapter: ItemAdapter
+    private lateinit var storyadapter: StoryAdapter
     private lateinit var binding: ActivityMainBinding
 
-    private val itemViewModel: ItemViewModel by viewModels()
+     private val storyViewModel: StoryViewModel by viewModels()
 
-    private val list = arrayListOf<ItemsModel>()
+    private val list = arrayListOf<StoryModel>()
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
@@ -30,10 +37,26 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerview()
 
-//        itemViewModel.getPost("print=pretty")
-        itemViewModel.getStorys()
+         storyViewModel.getStorys()
 
-        itemViewModel.postsLiveData.observe(this@MainActivity, {
+
+        binding.swipeContainer.setOnRefreshListener {
+            if(isNetworkAvailable())
+                storyViewModel.getStorys()
+            else{
+                swipeContainer.setRefreshing(false);
+                Toast.makeText(
+                    this,
+                    getString(R.string.internet),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+
+
+
+
+        storyViewModel.postsLiveData.observe(this@MainActivity, {
             when (it) {
                 is ApiState.Loading -> {
                     binding.rvItem.isVisible = false
@@ -43,15 +66,15 @@ class MainActivity : AppCompatActivity() {
                 is ApiState.Failure -> {
                     binding.rvItem.isVisible = false
                     binding.progressBar.isVisible = false
-                    Log.d("dsfsfss", "fail: "+it.msg.toString())
 
                 }
                 is ApiState.Success -> {
                     binding.rvItem.isVisible = true
                     binding.progressBar.isVisible = false
-                    Log.d("dsfsfss", "onCreate: "+it.data.toString())
+                     list.clear()
                     list.addAll(it.data)
-                    itemadapter.notifyDataSetChanged()
+                    swipeContainer.setRefreshing(false);
+                    storyadapter.notifyDataSetChanged()
                 }
 
                 is ApiState.Empty -> {
@@ -67,10 +90,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerview() {
 
-        itemadapter = ItemAdapter(list)
+        storyadapter = StoryAdapter(list)
         binding.rvItem.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = itemadapter
+            adapter = storyadapter
+        }
+    }
+
+    fun isNetworkAvailable() : Boolean{
+        val connectivityManager =
+            this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected) {
+            return true
+        }
+        else {
+            return false
         }
     }
 }

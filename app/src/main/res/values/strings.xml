@@ -6,4 +6,5 @@
     <string name="time"><![CDATA[time->]]></string>
     <string name="descendants"><![CDATA[descendants->]]></string>
     <string name="type"><![CDATA[type->]]></string>
+    <string name="internet">Internet Connection Is Required</string>
 </resources>

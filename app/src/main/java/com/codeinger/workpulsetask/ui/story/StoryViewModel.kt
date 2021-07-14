@@ -1,8 +1,8 @@
 package com.codeinger.workpulsetask.ui.story
 
 import androidx.lifecycle.*
-import com.codeinger.workpulsetask.model.ItemsModel
-import com.codeinger.workpulsetask.repository.ItemsRepository
+import com.codeinger.workpulsetask.model.StoryModel
+import com.codeinger.workpulsetask.repository.StoryRepository
 import com.codeinger.workpulsetask.utils.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,8 +14,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class ItemViewModel @Inject constructor(
-    private val itemsRepository: ItemsRepository
+class StoryViewModel @Inject constructor(
+    private val storyRepository: StoryRepository
 ) : ViewModel() {
 
     private val mutablePosts: MutableLiveData<ApiState> = MutableLiveData()
@@ -24,46 +24,47 @@ class ItemViewModel @Inject constructor(
     val topStoriesId = arrayListOf<Int>()
 
 
-    val itemList = arrayListOf<ItemsModel>()
+    val storyList = arrayListOf<StoryModel>()
 
     init {
         viewModelScope.launch  {
            val data = withContext(Dispatchers.IO){
-               itemsRepository.readAllData()
+               storyRepository.readAllStory()
            }
             if (data != null && data.isNotEmpty()) {
-                itemList.addAll(data)
-                mutablePosts.value = ApiState.Success(itemList)
+                storyList.addAll(data)
+                mutablePosts.value = ApiState.Success(storyList)
             }
         }
     }
 
     fun getStorys() {
 
+
         mutablePosts.value = ApiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
 
-            itemsRepository.getPosts("print=pretty").catch { e ->
+            storyRepository.getPosts("print=pretty").catch { e ->
             }.collect { ids ->
-                itemList.clear()
+                storyList.clear()
                 coroutineScope {
                     for (x in 0..49) {
-                        var data = itemsRepository.getItemById(ids[x])
+                        var data = storyRepository.getStoryById(ids[x])
                         if (data == null) {
                             launch {
                                 val apiResponse =
-                                    itemsRepository.getSinglePosts("${ids.get(x)}.json") //suspend function
-                                itemsRepository.addItem(apiResponse)
-                                itemList.add(apiResponse)
+                                    storyRepository.getSinglePosts("${ids.get(x)}.json") //suspend function
+                                storyRepository.addStory(apiResponse)
+                                storyList.add(apiResponse)
                             }
                         }
                         else{
-                            itemList.add(data!!)
+                            storyList.add(data!!)
                         }
 
                     }
                 }
-                var list = itemList.sortedWith(compareBy({ it.score }))
+                var list = storyList.sortedWith(compareBy({ it.score }))
                 withContext(Dispatchers.Main) {
                     mutablePosts.value = ApiState.Success(list)
                 }

@@ -2,8 +2,8 @@ package com.codeinger.workpulsetask.di
 
 import android.content.Context
 import com.codeinger.workpulsetask.data.network.ApiService
-import com.codeinger.workpulsetask.data.room.ItemDatabase
-import com.codeinger.workpulsetask.data.room.ItemsDao
+import com.codeinger.workpulsetask.data.room.StoryDatabase
+import com.codeinger.workpulsetask.data.room.StoryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,11 +22,11 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun getItemsDao(itemDataBase: ItemDatabase):ItemsDao = itemDataBase.itemDao()
+    fun getStoryDao(storyDataBase: StoryDatabase):StoryDao = storyDataBase.storyDao()
 
     @Provides
     @Singleton
-    fun getMyRoomDataBase(@ApplicationContext appContext: Context) = ItemDatabase.getDatabase(appContext)
+    fun getMyRoomDataBase(@ApplicationContext appContext: Context) = StoryDatabase.getDatabase(appContext)
 
 
     @Provides

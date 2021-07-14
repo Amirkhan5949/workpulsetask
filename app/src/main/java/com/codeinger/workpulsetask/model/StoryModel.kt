@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity (tableName = "news_table")
-data class ItemsModel(
+@Entity (tableName = "story_table")
+data class StoryModel(
     @PrimaryKey()
     val id: Int? = null,
     val score: Int? = null,

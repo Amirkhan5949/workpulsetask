@@ -14,4 +14,7 @@
     <color name="gray">#565a78</color>
     <color name="light_gray">#a4a8ad</color>
     <color name="primery_transparent">#BA14192C</color>
+    <color name="blue">#48b3ff</color>
+    <color name="light_green">#45C186</color>
+    <color name="green">#45C186</color>
 </resources>

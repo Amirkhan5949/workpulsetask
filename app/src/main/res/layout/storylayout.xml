@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_5ssp"
+    android:background="@color/white"
+    android:elevation="@dimen/_10ssp"
+    android:padding="@dimen/_10ssp"
+    app:cardCornerRadius="@dimen/_10ssp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="@dimen/_40ssp"
+            android:layout_height="@dimen/_40ssp"
+            android:layout_margin="@dimen/_14ssp"
+            android:background="@drawable/bg_circle"
+            android:gravity="center"
+            android:padding="@dimen/_10ssp"
+            android:text="30"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp" />
+
+        <LinearLayout
+            android:id="@+id/llmain"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/score"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserratmedium"
+                android:maxLines="1"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <TextView
+                android:id="@+id/by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title"
+                android:fontFamily="@font/montserratmedium"
+                android:maxLines="1"
+                android:text=""
+                android:layout_marginTop="@dimen/_2ssp"
+                android:textColor="@color/light_gray"
+                android:textSize="@dimen/_12ssp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="@dimen/_14ssp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/_14ssp"
+            android:layout_marginRight="@dimen/_14ssp"
+            android:layout_toRightOf="@+id/llmain"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/llmain"
+                android:background="@drawable/bg_border"
+                android:fontFamily="@font/montserratmedium"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/_10ssp"
+                android:paddingVertical="@dimen/_1ssp"
+                android:text="sfsfsfk"
+                android:textColor="@color/light_green"
+                android:textSize="@dimen/_12ssp" />
+
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/type"
+                android:layout_marginTop="@dimen/_5ssp"
+                android:layout_toRightOf="@+id/llmain"
+                android:fontFamily="@font/montserratmedium"
+                android:text="12:43:43"
+                android:textColor="@color/light_green"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
